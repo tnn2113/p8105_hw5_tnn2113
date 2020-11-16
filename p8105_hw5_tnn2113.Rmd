@@ -56,6 +56,7 @@ longitudinal_df =
 ```
 
 The following code chunk shows the spaghetti plot displaying the observations on each subject over time. 
+Over the course of 8 weeks, there were not a lot of changes in observation values in the control arm participants. However, there seemed to be an increase of observation values after week 4 in overall observation values in the experimental arm participants. 
 
 ```{r}
 longitudinal_df %>% 
