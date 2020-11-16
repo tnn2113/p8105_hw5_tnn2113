@@ -64,6 +64,38 @@ longitudinal_df %>%
   geom_path()
 ```
 
+## Problem 3
 
+We first generate 5000 datasets with `n = 30`, `mu = 0`, and `sigma = 5`. 
+
+```{r}
+set.seed(5)
+
+sim_mean_sd = function(sample_size = 30, mu, sigma  = 5) {
+  
+  sim_data = 
+    tibble(
+    x = rnorm(n = sample_size, mean = mu, sd = sigma)
+  )
+
+sim_data %>% 
+  summarise(
+    mean = mean(x),
+    sd = sd(x),
+    p_value = t.test(x) %>% 
+      broom::tidy() 
+  )
+
+}
+
+```
+
+Let's use a loop function to show the results of the t-test. 
+
+```{r}
+sim_results = 
+  rerun(5000, sim_mean_sd(mu = 0)) %>% 
+  bind_rows()
+```
 
 
