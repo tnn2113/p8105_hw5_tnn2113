@@ -53,7 +53,16 @@ longitudinal_df =
     names_prefix = "week_",
     values_to = "observation_values"
   )
-
-
 ```
+
+The following code chunk shows the spaghetti plot displaying the observations on each subject over time. 
+
+```{r}
+longitudinal_df %>% 
+  ggplot(aes(x = week, y = observation_values, group = subject_id, color = arm)) + 
+  geom_path()
+```
+
+
+
 
