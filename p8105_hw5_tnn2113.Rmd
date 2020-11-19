@@ -52,6 +52,11 @@ longitudinal_df =
     names_to = "week", 
     names_prefix = "week_",
     values_to = "observation_values"
+  ) %>% 
+  mutate(arm = 
+           recode(arm, 
+         con = "control",
+         exp = "experiment")
   )
 ```
 
@@ -139,6 +144,40 @@ sim_results_true_mu %>%
 ```
 
 The plot shows that the power increases as the effect size increases. 
+
+
+
+The following code chunk showed the average estimate of mu hat on the y-axis and the true value of mu on the x-axis
+
+```{r}
+new_results %>% 
+  group_by(new_mu) %>% 
+  summarise(mu_hat = mean(mean)) %>% 
+  ggplot(aes(x = new_mu, y = mu_hat)) +
+  geom_point() + 
+  geom_line()
+
+```
+
+The following plot shows the average estimate of mu hat only in samples for which the null was rejected on the y-axis and the true value of mu on the x-axis
+
+```{r}
+mu_hat_rejected = 
+  new_results %>% 
+  filter(t_test < 0.05) %>% 
+  group_by(new_mu) %>% 
+  summarise(rejected_mu_hat = mean(mean))
+
+mu_hat_rejected %>% 
+  ggplot(aes(x = new_mu, y = rejected_mu_hat)) + 
+  geom_point() +
+  geom_line()
+```
+
+The above plots showed that the same average mu hat across tests for which the null is rejected is approximately equal to the true value of mu when after true mu = 4. That means when true mu = {4,5,6}, the null hypothesis is rejected. 
+
+
+
 
 
 
